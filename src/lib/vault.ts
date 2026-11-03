@@ -17,12 +17,12 @@ export const newMnemonic = (strength: 128 | 256 = 128) => generateMnemonic(wordl
 export const isValidMnemonic = (m: string) => validateMnemonic(normalize(m), wordlist);
 const normalize = (m: string) => m.trim().toLowerCase().split(/\s+/).join(" ");
 export const normalizeDomain = (d: string) =>
-  d.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0];
+  d.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0] ?? "";
 
 /** Domain -> hardened 31-bit index, so path is m/44'/1'/0'/<idx>'/<counter>' */
 export function derivationPath(domain: string, counter: number) {
   const h = sha256(utf8ToBytes(normalizeDomain(domain)));
-  const idx = ((h[0] << 24) | (h[1] << 16) | (h[2] << 8) | h[3]) & 0x7fffffff;
+  const idx = ((h[0]! << 24) | (h[1]! << 16) | (h[2]! << 8) | h[3]!) & 0x7fffffff;
   h.fill(0);
   return `m/44'/1'/0'/${idx}'/${counter}'`;
 }
@@ -48,14 +48,14 @@ export function derivePassword(mnemonic: string, domain: string, opts: Options) 
   const pick = (n: number) => {
     const limit = 256 - (256 % n);
     while (pos < stream.length) {
-      const b = stream[pos++];
+      const b = stream[pos++]!;
       if (b < limit) return b % n;
     }
     throw new Error("entropy exhausted");
   };
   const all = sets.map((s) => SETS[s]).join("");
-  const chars: string[] = sets.map((s) => SETS[s][pick(SETS[s].length)]);
-  while (chars.length < opts.length) chars.push(all[pick(all.length)]);
+  const chars: string[] = sets.map((s) => SETS[s][pick(SETS[s].length)]!);
+  while (chars.length < opts.length) chars.push(all[pick(all.length)]!);
   for (let i = chars.length - 1; i > 0; i--) {
     const j = pick(i + 1);
     const t = chars[i]!;
