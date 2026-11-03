@@ -49,7 +49,7 @@ To build this as a standalone, offline-first application:
 * **Cryptographic Engine:** Use battle-tested cryptographic libraries (`rust-crypto` or `ethers-rs` / `bitcoin` crates in Rust) to handle BIP-39 mnemonic generation and BIP-32/44 key derivation securely in native memory.
 * **Memory Protection:** Implement strict zeroization protocols (e.g., zeroing out RAM variables immediately after the password is copied to the clipboard or displayed) so memory-scraping malware cannot capture the seed.
 
-This project was built with [Lovable](https://lovable.dev).
+
 
 
 ## Development
