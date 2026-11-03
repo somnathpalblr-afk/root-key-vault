@@ -58,7 +58,9 @@ export function derivePassword(mnemonic: string, domain: string, opts: Options) 
   while (chars.length < opts.length) chars.push(all[pick(all.length)]);
   for (let i = chars.length - 1; i > 0; i--) {
     const j = pick(i + 1);
-    [chars[i], chars[j]] = [chars[j], chars[i]];
+    const t = chars[i]!;
+    chars[i] = chars[j]!;
+    chars[j] = t;
   }
   const password = chars.join("");
 
