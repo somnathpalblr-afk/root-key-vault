@@ -9,6 +9,7 @@ import {
   normalizeDomain,
   type SetKey,
 } from "@/lib/vault";
+import { SeedQR } from "@/components/SeedQR";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -104,6 +105,7 @@ function Index() {
         <p className={`mt-2 text-xs ${mnemonic ? (valid ? "text-primary" : "text-destructive") : "text-muted-foreground"}`}>
           {mnemonic ? (valid ? "✓ valid BIP-39 checksum" : "✗ invalid phrase or checksum") : "Write new phrases on paper. Losing them means losing every password."}
         </p>
+        <SeedQR mnemonic={mnemonic} valid={valid} onLoad={(m) => { setMnemonic(m); setReveal(false); }} />
       </section>
 
       <section className="mt-5 rounded border border-border bg-card p-5">
