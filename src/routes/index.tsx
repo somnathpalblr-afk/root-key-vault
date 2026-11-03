@@ -105,7 +105,20 @@ function Index() {
         <p className={`mt-2 text-xs ${mnemonic ? (valid ? "text-primary" : "text-destructive") : "text-muted-foreground"}`}>
           {mnemonic ? (valid ? "✓ valid BIP-39 checksum" : "✗ invalid phrase or checksum") : "Write new phrases on paper. Losing them means losing every password."}
         </p>
-        <SeedQR mnemonic={mnemonic} valid={valid} onLoad={(m) => { setMnemonic(m); setReveal(false); }} />
+        <SeedQR
+          mnemonic={mnemonic}
+          valid={valid}
+          domain={nd}
+          counter={counter}
+          sets={sets}
+          onLoad={(d) => {
+            setMnemonic(d.mnemonic);
+            if (d.domain) setDomain(d.domain);
+            if (d.counter >= 0) setCounter(d.counter);
+            if (d.sets.length) setSets(d.sets);
+            setReveal(false);
+          }}
+        />
       </section>
 
       <section className="mt-5 rounded border border-border bg-card p-5">
