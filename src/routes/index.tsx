@@ -10,8 +10,6 @@ import {
   type SetKey,
 } from "@/lib/vault";
 import { SeedQR } from "@/components/SeedQR";
-import { payloadToSeed, seedToPayload } from "@/lib/seedqr";
-void payloadToSeed; void seedToPayload;
 
 export const Route = createFileRoute("/")({
   head: () => ({
